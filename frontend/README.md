@@ -1,68 +1,158 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Frontend Structure - VideoAI Project
 
-## Available Scripts
+## Overview
+The frontend has been organized into a modular structure with clear separation of concerns. All components are now organized in the `src/frontend` directory.
 
-In the project directory, you can run:
+## Folder Structure
 
-### `npm start`
+```
+src/frontend/
+├── pages/              # Page-level components
+│   ├── LandingPage.js         # Landing page with hero and features
+│   ├── AuthPage.js            # Sign in/Sign up page
+│   ├── Dashboard.js           # Video management dashboard
+│   ├── UploadPage.js          # Video upload page with drag-drop
+│   └── VideoViewPage.js       # Video player and analytics view
+│
+├── components/         # Reusable components
+│   ├── Navigation.js          # Top navigation bar
+│   ├── FeatureCard.js         # Feature card component
+│   └── QuizComponent.js       # Quiz interface component
+│
+├── context/            # React Context for state management
+│   └── AuthContext.js         # Authentication context and hooks
+│
+├── styles/             # Styling
+│   └── styles.js              # All inline styles object
+│
+└── utils/              # Utility functions (ready for expansion)
+```
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Component Details
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+### Pages
 
-### `npm test`
+#### LandingPage.js
+- Hero section with title and call-to-action
+- Features grid showcasing app capabilities
+- Call-to-action section with gradient background
+- Uses FeatureCard component for feature display
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### AuthPage.js
+- Tab-based interface for Sign In/Sign Up
+- Form validation
+- Uses AuthContext for user authentication
+- Error handling
 
-### `npm run build`
+#### Dashboard.js
+- Video gallery grid
+- Empty state when no videos
+- Video card display with status
+- Navigation to upload and video view pages
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### UploadPage.js
+- Drag-and-drop file upload area
+- File preview with details
+- Progress bar for upload simulation
+- Title input field
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+#### VideoViewPage.js
+- Video player placeholder
+- Tabbed interface for:
+  - Summary
+  - Highlights
+  - Chapters
+  - Subtitles
+  - Quiz
+- Integrates QuizComponent for quiz tab
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Components
 
-### `npm run eject`
+#### Navigation.js
+- Logo and branding
+- Dynamic navigation based on auth state
+- User section with logout button
+- Navigation links for authenticated users
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+#### FeatureCard.js
+- Displays feature with icon, title, and description
+- Reusable component for features grid
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### QuizComponent.js
+- Question-based quiz interface
+- Multiple choice options
+- Score tracking and results display
+- Progress indicator with dots
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Context
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+#### AuthContext.js
+- Manages user authentication state
+- localStorage persistence
+- `useAuth()` hook for easy access
+- login() and logout() functions
 
-## Learn More
+### Styles
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### styles.js
+- Centralized styling object
+- Supports all pages and components
+- Dark theme with cyan (#00D9FF) and purple (#9D4EDD) accents
+- Responsive design utilities
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Key Features
 
-### Code Splitting
+1. **Modular Architecture**: Each page and component is independently maintained
+2. **Reusable Components**: Navigation, FeatureCard, and QuizComponent can be used across pages
+3. **Context API**: Centralized authentication state management
+4. **Consistent Styling**: All styles in one place for easy maintenance
+5. **Clear Separation**: Pages handle routing logic, components are presentational
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+## Usage
 
-### Analyzing the Bundle Size
+### Main App.js
+```javascript
+import { AuthProvider } from './frontend/context/AuthContext';
+import Navigation from './frontend/components/Navigation';
+import styles from './frontend/styles/styles';
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+### Importing in Components
+```javascript
+import { useAuth } from '../context/AuthContext';
+import styles from '../styles/styles';
+```
 
-### Making a Progressive Web App
+## State Management
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+- **Global**: Authentication state (AuthContext)
+- **Local**: Videos state in MainApp component
+- **Component**: Page-specific state in individual pages
 
-### Advanced Configuration
+## Styling
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+The application uses inline CSS-in-JS styling with the following design system:
 
-### Deployment
+- **Primary Color**: #00D9FF (Cyan)
+- **Secondary Color**: #9D4EDD (Purple)
+- **Background**: #0F172A (Dark Navy)
+- **Cards**: #1E293B (Lighter Navy)
+- **Text**: #E2E8F0 (Light Gray)
+- **Muted**: #94A3B8 (Medium Gray)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+## Future Enhancements
 
-### `npm run build` fails to minify
+- Move styles to CSS modules or styled-components
+- Add utility functions in `utils/` folder
+- Create custom hooks for common logic
+- Add prop validation with PropTypes
+- Implement error boundaries
+- Add loading skeletons
+- Implement API integration layer
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## Notes
+
+- All components use functional React hooks
+- No external component libraries (all custom)
+- Ready for backend API integration
+- Easily scalable structure for feature additions
