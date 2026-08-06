@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { API_BASE_URL } from "../services/api";
 
 const QuizPage = () => {
     const { video_id } = useParams();
@@ -10,14 +11,14 @@ const QuizPage = () => {
     const [showResults, setShowResults] = useState({});
 
     useEffect(() => {
-        fetch(`http://127.0.0.1:8000/api/videos/quiz/${video_id}`)
+        fetch(`${API_BASE_URL}/api/videos/quiz/${video_id}`)
             .then(res => res.json())
             .then(data => {
                 setQuiz(data.quiz || []);
                 setLoading(false);
             })
             .catch(err => console.error(err));
-    }, []);
+    }, [video_id]);
 
     const handleAnswer = (qIndex, option) => {
         setSelectedAnswers((prev) => ({ ...prev, [qIndex]: option }));

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../services/api";
 
 const UploadPage = () => {
   const [activeTab, setActiveTab] = useState("video");
@@ -22,7 +23,7 @@ const UploadPage = () => {
 
     setLoading(true);
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/videos/upload", {
+      const res = await fetch(`${API_BASE_URL}/api/videos/upload`, {
         method: "POST",
         body: formData,
       });
@@ -53,7 +54,7 @@ const UploadPage = () => {
 
     setLoading(true);
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/videos/text/summarize", {
+      const res = await fetch(`${API_BASE_URL}/api/videos/text/summarize`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: textInput }),
@@ -85,7 +86,7 @@ const UploadPage = () => {
 
     setLoading(true);
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/videos/youtube/summarize", {
+      const res = await fetch(`${API_BASE_URL}/api/videos/youtube/summarize`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ url: ytUrl }),

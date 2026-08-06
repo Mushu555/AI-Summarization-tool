@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import styles from "../styles/styles";
+import { API_BASE_URL } from "../services/api";
 
 const VideoViewPage = () => {
   const { state } = useLocation();
@@ -29,7 +30,7 @@ const VideoViewPage = () => {
     setLoading(true);
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/videos/translate", {
+      const res = await fetch(`${API_BASE_URL}/api/videos/translate`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

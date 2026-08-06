@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import * as apiService from '../services/api';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {

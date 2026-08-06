@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
@@ -10,9 +11,15 @@ app = FastAPI(
     version="1.0.0"
 )
 
+allowed_origins = [
+    origin.strip()
+    for origin in os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(",")
+    if origin.strip()
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -30,6 +37,10 @@ app.router.lifespan_context = lifespan
 @app.get("/")
 def root():
     return {"message": "VideoAI Backend Running!"}
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
 
 app.include_router(auth_mongo.router, prefix="/api/auth", tags=["Auth"])
 app.include_router(videos_mongo.router, prefix="/api/videos", tags=["Videos"])

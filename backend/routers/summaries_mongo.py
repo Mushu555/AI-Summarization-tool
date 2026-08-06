@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from code.pipeline import process_text, process_youtube
+from ai_pipeline.pipeline import process_text, process_youtube
 
 router = APIRouter()
 

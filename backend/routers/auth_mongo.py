@@ -1,3 +1,5 @@
+import os
+import secrets
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, validator
 from passlib.context import CryptContext
@@ -8,7 +10,15 @@ from db.database import get_db
 
 router = APIRouter()
 
-SECRET_KEY = "YOURSECRETKEY"
+SECRET_KEY = os.getenv("JWT_SECRET_KEY")
+if not SECRET_KEY:
+    SECRET_KEY = secrets.token_hex(32)
+    print(
+        "⚠️  JWT_SECRET_KEY not set in environment — using a random secret for this "
+        "process only. Tokens will be invalidated on every restart. Set JWT_SECRET_KEY "
+        "in your .env before deploying to production."
+    )
+
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 

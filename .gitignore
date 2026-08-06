@@ -1,6 +1,19 @@
-
+# Python
 backend/__pycache__/
+**/__pycache__/
+*.pyc
 
 database/
 
+# Secrets
+.env
+*.env
+!*.env.example
+
+# Backend runtime artifacts
+backend/output/
+backend/video_input/
+
+# Frontend
 frontend/node_modules/
+frontend/build/

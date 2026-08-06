@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "../styles/styles";
+import { API_BASE_URL } from "../services/api";
 
 const Dashboard = () => {
   const [videos, setVideos] = useState([]);
@@ -8,7 +9,7 @@ const Dashboard = () => {
 
   // Fetch videos on page load
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/videos/list")
+    fetch(`${API_BASE_URL}/api/videos/list`)
       .then((res) => res.json())
       .then((data) => setVideos(data));
   }, []);
@@ -27,7 +28,7 @@ const Dashboard = () => {
   const deleteVideo = async (id) => {
     if (!window.confirm("Are you sure you want to delete this video?")) return;
 
-    const res = await fetch(`http://127.0.0.1:8000/api/videos/delete/${id}`, {
+    const res = await fetch(`${API_BASE_URL}/api/videos/delete/${id}`, {
       method: "DELETE",
     });
 
@@ -36,15 +37,6 @@ const Dashboard = () => {
     } else {
       alert("Failed to delete video");
     }
-  };
-
-  // Generate quiz button click
-  const generateQuiz = (video) => {
-    navigate(`/quiz/${video._id}`, {
-      state: {
-        summary: video.summary,
-      },
-    });
   };
 
   return (
